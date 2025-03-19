@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "../include/DenseLayer.h"
-#include "../include/ActivationFunctions.h"
+#include "../../include/Layer/DenseLayer.h"
+#include "../../include/ActivationFunctions/ActivationFunctions.h"
 
 // Test DenseLayer Initialization
 TEST(DenseLayerTest, Initialization) {

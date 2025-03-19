@@ -1,4 +1,4 @@
-#include "../include/DropoutLayer.h"
+#include "../../include/Layer/DropoutLayer.h"
 
 // -------------------- DropoutLayer Constructor --------------------
 DropoutLayer::DropoutLayer(size_t inputSize, size_t neurons, std::shared_ptr<ActivationFunction> activationFunc, float dropoutRate)

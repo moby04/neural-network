@@ -3,7 +3,8 @@
 
 // Test Dropout Layer does not change input shape
 TEST(DropoutLayerTest, OutputShapeUnchanged) {
-    DropoutLayer layer(3, 0.5); // 3 neurons, 50% dropout
+    auto activation = std::make_shared<SigmoidActivation>();
+    DropoutLayer layer(3, 3, activation, 0.5); // 3 neurons, 50% dropout
     Matrix input(3, 1);
     input.setData({{1.0}, {2.0}, {3.0}});
 
@@ -15,7 +16,8 @@ TEST(DropoutLayerTest, OutputShapeUnchanged) {
 
 // Test Dropout Effect (Ensure some elements are zero)
 TEST(DropoutLayerTest, SomeNeuronsAreDropped) {
-    DropoutLayer layer(5, 0.5); // 50% dropout probability
+    auto activation = std::make_shared<SigmoidActivation>();
+    DropoutLayer layer(5, 5, activation, 0.5); // 50% dropout probability
     Matrix input(5, 1);
     input.setData({{1.0}, {1.0}, {1.0}, {1.0}, {1.0}});
 
@@ -32,7 +34,8 @@ TEST(DropoutLayerTest, SomeNeuronsAreDropped) {
 
 // Test Dropout with 0% Rate (No Neurons Dropped)
 TEST(DropoutLayerTest, ZeroDropout) {
-    DropoutLayer layer(3, 0.0); // No dropout
+    auto activation = std::make_shared<SigmoidActivation>();
+    DropoutLayer layer(3, 3, activation, 0.0); // No dropout
     Matrix input(3, 1);
     input.setData({{1.0}, {2.0}, {3.0}});
 
@@ -43,7 +46,8 @@ TEST(DropoutLayerTest, ZeroDropout) {
 
 // Test Dropout with 100% Rate (All Neurons Dropped)
 TEST(DropoutLayerTest, FullDropout) {
-    DropoutLayer layer(3, 1.0); // 100% dropout (all neurons dropped)
+    auto activation = std::make_shared<SigmoidActivation>();
+    DropoutLayer layer(3, 3, activation, 1.0); // 100% dropout (all neurons dropped)
     Matrix input(3, 1);
     input.setData({{1.0}, {2.0}, {3.0}});
 

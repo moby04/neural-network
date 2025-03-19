@@ -1,4 +1,4 @@
-#include "../include/Layer.h"
+#include "../../include/Layer/Layer.h"
 
 const Matrix& Layer::getWeights() const {
     return weights;

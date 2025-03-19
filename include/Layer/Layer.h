@@ -1,8 +1,8 @@
 #ifndef LAYER_H
 #define LAYER_H
 
-#include "ActivationFunctions.h"
-#include "Matrix.h"
+#include "../ActivationFunctions/ActivationFunctions.h"
+#include "../Matrix.h"
 #include <functional>
 #include <memory>
 

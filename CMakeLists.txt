@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Add the executable
-file(GLOB SOURCES "src/*.cpp")
+file(GLOB SOURCES "src/*.cpp" "src/*/*.cpp")
 list(REMOVE_ITEM SOURCES "${CMAKE_SOURCE_DIR}/src/main.cpp")
 add_executable(NeuralNetwork ${SOURCES} src/main.cpp)
 
@@ -26,7 +26,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 # Add test executable
-file(GLOB TEST_SOURCES "tests/test_*.cpp" "src/*.cpp")
+file(GLOB TEST_SOURCES "tests/test_*.cpp" "src/*.cpp" "src/*/*.cpp")
 list(REMOVE_ITEM TEST_SOURCES "${CMAKE_SOURCE_DIR}/src/main.cpp")
 add_executable(NeuralNetworkTests ${TEST_SOURCES})
 

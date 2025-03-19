@@ -21,7 +21,7 @@ private:
     // Vector handles the memory management so it's better for handling data owned by the object.
     // on the other hand span<> used below is a non-owning reference that is faster and more efficient
     // so it's better for passing data to and from functions.
-    std::vector<std::vector<float>> data; 
+    std::vector<std::vector<double>> data; 
 
 public:
     Matrix(size_t rows, size_t cols, const std::string& name = "UNNAMED");
@@ -33,9 +33,9 @@ public:
 
     void fillByHand();
     void print() const;
-    void randomize(float min = 0.0f, float max = 1.0f);
+    void randomize(double min = 0.0, double max = 1.0);
 
-    Matrix applyFunction(const std::function<float(float)>& func) const;
+    Matrix applyFunction(const std::function<double(double)>& func) const;
 
     static Matrix createIdentityMatrix(size_t size, const std::string& name = "UNNAMED");
 
@@ -43,19 +43,19 @@ public:
     Matrix add(const Matrix& other) const;
     Matrix subtract(const Matrix& other) const;
     Matrix multiply(const Matrix& other, bool elementWise = true) const;
-    Matrix multiply(float scalar) const;
+    Matrix multiply(double scalar) const;
     Matrix transpose() const;
 
     // Getters
     size_t getRows() const;
     size_t getCols() const;
-    const std::vector<std::vector<float>>& getData() const;
-    std::span<const float> getRow(size_t row) const;
-    std::span<const float> getCol(size_t col) const;
+    const std::vector<std::vector<double>>& getData() const;
+    std::span<const double> getRow(size_t row) const;
+    std::span<const double> getCol(size_t col) const;
 
     // Setters
-    void setData(const std::vector<std::vector<float>>& newData);
-    void setData(float value);
+    void setData(const std::vector<std::vector<double>>& newData);
+    void setData(double value);
 
     // Friend functions for overloading the << and >> operators
     friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
@@ -65,16 +65,16 @@ public:
     Matrix operator+(const Matrix& other) const;
     Matrix operator-(const Matrix& other) const;
     Matrix operator*(const Matrix& other) const;
-    Matrix operator*(float scalar) const;
+    Matrix operator*(double scalar) const;
 
-    float& operator()(size_t row, size_t col);
-    const float& operator()(size_t row, size_t col) const;
+    double& operator()(size_t row, size_t col);
+    const double& operator()(size_t row, size_t col) const;
 
     bool operator==(const Matrix& other) const;
-    std::partial_ordering operator<=>(const Matrix& other) const;
+    std::partial_ordering operator<=>(const Matrix& other) const; 
 
     // Custom comparison function
-    bool isEqual(const Matrix& other, float tolerance = 1e-5) const;
+    bool isEqual(const Matrix& other, double tolerance = 1e-5) const;
 };
 
 #endif // MATRIX_H

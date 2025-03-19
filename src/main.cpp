@@ -11,7 +11,7 @@ int main() {
     m2.print();
 
     Matrix m3(3, 3, "RandomMatrix");
-    m3.randomize(0.0f, 10.0f);
+    m3.randomize(0.0, 10.0);
     m3.print();
 
     // Example of using file streams

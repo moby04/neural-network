@@ -1,4 +1,4 @@
-#include "../include/DenseLayer.h"
+#include "../../include/Layer/DenseLayer.h"
 
 // -------------------- DenseLayer Constructor --------------------
 DenseLayer::DenseLayer(size_t inputSize, size_t neurons, std::shared_ptr<ActivationFunction> activationFunc)

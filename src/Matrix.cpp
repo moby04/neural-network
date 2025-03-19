@@ -1,7 +1,7 @@
 #include "../include/Matrix.h"
 
 Matrix::Matrix(size_t rows, size_t cols, const std::string& name)
-    : rows(rows), cols(cols), name(name), data(rows, std::vector<float>(cols, 0.0f)) {}
+    : rows(rows), cols(cols), name(name), data(rows, std::vector<double>(cols, 0.0)) {}
 
 // Copy constructor
 Matrix::Matrix(const Matrix& other)
@@ -25,29 +25,29 @@ size_t Matrix::getCols() const {
     return cols;
 }
 
-const std::vector<std::vector<float>>& Matrix::getData() const {
+const std::vector<std::vector<double>>& Matrix::getData() const {
     return data;
 }
 
-std::span<const float> Matrix::getRow(size_t row) const {
+std::span<const double> Matrix::getRow(size_t row) const {
     if (row >= rows) {
         throw std::out_of_range("Row index out of range.");
     }
-    return std::span<const float>(data[row]);
+    return std::span<const double>(data[row]);
 }
 
-std::span<const float> Matrix::getCol(size_t col) const {
+std::span<const double> Matrix::getCol(size_t col) const {
     if (col >= cols) {
         throw std::out_of_range("Column index out of range.");
     }
-    std::vector<float> colData(rows);
+    std::vector<double> colData(rows);
     for (size_t i = 0; i < rows; ++i) {
         colData[i] = data[i][col];
     }
-    return std::span<const float>(colData);
+    return std::span<const double>(colData);
 }
 
-void Matrix::setData(const std::vector<std::vector<float>>& newData) {
+void Matrix::setData(const std::vector<std::vector<double>>& newData) {
     if (newData.empty()) {
         throw std::invalid_argument("Data cannot be empty.");
     }
@@ -62,7 +62,7 @@ void Matrix::setData(const std::vector<std::vector<float>>& newData) {
     cols = newCols;
 }
 
-void Matrix::setData(float value) {
+void Matrix::setData(double value) {
     for (size_t i = 0; i < rows; ++i) {
         for (size_t j = 0; j < cols; ++j) {
             data[i][j] = value;
@@ -82,7 +82,7 @@ void Matrix::print() const {
 Matrix Matrix::createIdentityMatrix(size_t size, const std::string& name) {
     Matrix identity(size, size, name);
     for (size_t i = 0; i < size; ++i) {
-        identity.data[i][i] = 1.0f;
+        identity.data[i][i] = 1.0;
     }
     return identity;
 }
@@ -142,7 +142,7 @@ Matrix Matrix::multiply(const Matrix& other, bool elementWise) const {
     }
 }
 
-Matrix Matrix::multiply(float scalar) const {
+Matrix Matrix::multiply(double scalar) const {
     Matrix result(rows, cols, "Result");
     for (size_t i = 0; i < rows; ++i) {
         for (size_t j = 0; j < cols; ++j) {
@@ -162,7 +162,7 @@ Matrix Matrix::transpose() const {
     return result;
 }
 
-Matrix Matrix::applyFunction(const std::function<float(float)>& func) const {
+Matrix Matrix::applyFunction(const std::function<double(double)>& func) const {
     Matrix result(rows, cols, "Result");
     for (size_t i = 0; i < rows; ++i) {
         for (size_t j = 0; j < cols; ++j) {
@@ -184,18 +184,18 @@ Matrix Matrix::operator*(const Matrix& other) const {
     return multiply(other, true); // Use element-wise multiplication
 }
 
-Matrix Matrix::operator*(float scalar) const {
+Matrix Matrix::operator*(double scalar) const {
     return multiply(scalar);
 }
 
-float& Matrix::operator()(size_t row, size_t col) {
+double& Matrix::operator()(size_t row, size_t col) {
     if (row >= rows || col >= cols) {
         throw std::out_of_range("Matrix indices out of range.");
     }
     return data[row][col];
 }
 
-const float& Matrix::operator()(size_t row, size_t col) const {
+const double& Matrix::operator()(size_t row, size_t col) const {
     if (row >= rows || col >= cols) {
         throw std::out_of_range("Matrix indices out of range.");
     }
@@ -224,8 +224,8 @@ std::partial_ordering Matrix::operator<=>(const Matrix& other) const {
         return totalElements1 <=> totalElements2;
     }
 
-    float sum1 = 0;
-    float sum2 = 0;
+    double sum1 = 0;
+    double sum2 = 0;
     for (size_t i = 0; i < rows; ++i) {
         for (size_t j = 0; j < cols; ++j) {
             sum1 += data[i][j];
@@ -240,7 +240,7 @@ std::partial_ordering Matrix::operator<=>(const Matrix& other) const {
     return sum1 <=> sum2;
 }
 
-bool Matrix::isEqual(const Matrix& other, float tolerance) const {
+bool Matrix::isEqual(const Matrix& other, double tolerance) const {
     if (rows != other.rows || cols != other.cols) {
         return false;
     }
@@ -254,7 +254,7 @@ bool Matrix::isEqual(const Matrix& other, float tolerance) const {
     return true;
 }
 
-void Matrix::randomize(float min, float max) {
+void Matrix::randomize(double min, double max) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(min, max);
@@ -288,14 +288,14 @@ std::istream& operator>>(std::istream& is, Matrix& matrix) {
         }
     } else {
         // File input
-        std::vector<std::vector<float>> tempData;
+        std::vector<std::vector<double>> tempData;
         size_t cols = 0;
         std::string line;
 
         while (std::getline(is, line)) {
             std::istringstream lineStream(line);
-            std::vector<float> row;
-            float value;
+            std::vector<double> row;
+            double value;
             while (lineStream >> value) {
                 row.push_back(value);
             }

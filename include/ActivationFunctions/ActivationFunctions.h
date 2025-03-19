@@ -1,7 +1,7 @@
 #ifndef ACTIVATION_FUNCTIONS_H
 #define ACTIVATION_FUNCTIONS_H
 
-#include "Matrix.h"
+#include "../Matrix.h"
 #include <functional>
 
 /**

@@ -2,7 +2,6 @@
 #define DENSE_LAYER_H
 
 #include "Layer.h"
-#include "Matrix.h"
 #include <memory>
 
 // Dense Layer (Fully Connected Layer)
