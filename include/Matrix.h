@@ -25,6 +25,7 @@ private:
 
 public:
     Matrix(size_t rows, size_t cols, const std::string& name = "UNNAMED");
+    Matrix(const Matrix& other); // Copy constructor
     ~Matrix();
 
     void setName(const std::string& name);
@@ -33,6 +34,7 @@ public:
     void fillByHand();
     void print() const;
     void randomize(float min = 0.0f, float max = 1.0f);
+
     Matrix applyFunction(const std::function<float(float)>& func) const;
 
     static Matrix createIdentityMatrix(size_t size, const std::string& name = "UNNAMED");
@@ -53,6 +55,7 @@ public:
 
     // Setters
     void setData(const std::vector<std::vector<float>>& newData);
+    void setData(float value);
 
     // Friend functions for overloading the << and >> operators
     friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
@@ -63,6 +66,10 @@ public:
     Matrix operator-(const Matrix& other) const;
     Matrix operator*(const Matrix& other) const;
     Matrix operator*(float scalar) const;
+
+    float& operator()(size_t row, size_t col);
+    const float& operator()(size_t row, size_t col) const;
+
     bool operator==(const Matrix& other) const;
     std::partial_ordering operator<=>(const Matrix& other) const;
 

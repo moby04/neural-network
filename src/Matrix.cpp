@@ -3,6 +3,10 @@
 Matrix::Matrix(size_t rows, size_t cols, const std::string& name)
     : rows(rows), cols(cols), name(name), data(rows, std::vector<float>(cols, 0.0f)) {}
 
+// Copy constructor
+Matrix::Matrix(const Matrix& other)
+    : name(other.name), rows(other.rows), cols(other.cols), data(other.data) {}
+
 Matrix::~Matrix() {}
 
 void Matrix::setName(const std::string& name) {
@@ -56,6 +60,14 @@ void Matrix::setData(const std::vector<std::vector<float>>& newData) {
     data = newData;
     rows = newData.size();
     cols = newCols;
+}
+
+void Matrix::setData(float value) {
+    for (size_t i = 0; i < rows; ++i) {
+        for (size_t j = 0; j < cols; ++j) {
+            data[i][j] = value;
+        }
+    }
 }
 
 void Matrix::fillByHand() {
@@ -174,6 +186,20 @@ Matrix Matrix::operator*(const Matrix& other) const {
 
 Matrix Matrix::operator*(float scalar) const {
     return multiply(scalar);
+}
+
+float& Matrix::operator()(size_t row, size_t col) {
+    if (row >= rows || col >= cols) {
+        throw std::out_of_range("Matrix indices out of range.");
+    }
+    return data[row][col];
+}
+
+const float& Matrix::operator()(size_t row, size_t col) const {
+    if (row >= rows || col >= cols) {
+        throw std::out_of_range("Matrix indices out of range.");
+    }
+    return data[row][col];
 }
 
 bool Matrix::operator==(const Matrix& other) const {

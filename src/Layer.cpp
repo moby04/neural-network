@@ -1,8 +1,5 @@
 #include "../include/Layer.h"
 
-Layer::Layer(size_t neurons, std::shared_ptr<ActivationFunction> activationFunc)
-    : weights(neurons, 0), biases(neurons, 1), activation(std::move(activationFunc)) {}
-
 const Matrix& Layer::getWeights() const {
     return weights;
 }

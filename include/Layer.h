@@ -13,10 +13,12 @@ protected:
     std::shared_ptr<ActivationFunction> activation;
 
 public:
-    Layer(size_t neurons, std::shared_ptr<ActivationFunction> activationFunc);
+    Layer(size_t inputSize, size_t neurons, std::shared_ptr<ActivationFunction> activationFunc)
+        : weights(neurons, inputSize), biases(neurons, 1), activation(activationFunc) {}
     virtual ~Layer() = default;
 
     virtual Matrix forward(const Matrix& input) = 0;
+    virtual Matrix backward(const Matrix& gradient) = 0; 
 
     // Getters for weights and biases
     const Matrix& getWeights() const;

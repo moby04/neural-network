@@ -16,3 +16,5 @@ Makefile
 /tests/*.exe
 /tests/*.out
 /tests/*.o
+
+*.zip
