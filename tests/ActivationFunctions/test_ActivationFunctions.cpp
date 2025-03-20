@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../include/ActivationFunctions/ActivationFunctions.h"
+#include "../../include/ActivationFunctions/ActivationFunctions.h"
 
 // // Test Sigmoid Activation Function
 TEST(ActivationFunctionTest, SigmoidFunction) {

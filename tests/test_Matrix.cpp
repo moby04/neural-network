@@ -69,6 +69,76 @@ TEST(MatrixTest, FillByHandWithOperator) {
     EXPECT_EQ(oss.str(), expected_output);
 }
 
+// Test sumRows() on a non-empty matrix
+TEST(MatrixTest, SumRowsValid) {
+    Matrix mat(3, 3);
+    mat.setData({{1.0, 2.0, 3.0},
+                 {4.0, 5.0, 6.0},
+                 {7.0, 8.0, 9.0}});
+
+    Matrix result = mat.sumRows();
+
+    EXPECT_EQ(result.getRows(), 3);
+    EXPECT_EQ(result.getCols(), 1);
+    EXPECT_DOUBLE_EQ(result.getData()[0][0], 6.0);  // 1+2+3
+    EXPECT_DOUBLE_EQ(result.getData()[1][0], 15.0); // 4+5+6
+    EXPECT_DOUBLE_EQ(result.getData()[2][0], 24.0); // 7+8+9
+}
+
+// Test sumColumns() on a non-empty matrix
+TEST(MatrixTest, SumColumnsValid) {
+    Matrix mat(3, 3);
+    mat.setData({{1.0, 2.0, 3.0},
+                 {4.0, 5.0, 6.0},
+                 {7.0, 8.0, 9.0}});
+
+    Matrix result = mat.sumColumns();
+
+    EXPECT_EQ(result.getRows(), 1);
+    EXPECT_EQ(result.getCols(), 3);
+    EXPECT_DOUBLE_EQ(result.getData()[0][0], 12.0); // 1+4+7
+    EXPECT_DOUBLE_EQ(result.getData()[0][1], 15.0); // 2+5+8
+    EXPECT_DOUBLE_EQ(result.getData()[0][2], 18.0); // 3+6+9
+}
+
+// Test sumRows() on an empty matrix (should throw an exception)
+TEST(MatrixTest, SumRowsEmpty) {
+    Matrix mat(0, 3);  // 0 rows
+    EXPECT_THROW(mat.sumRows(), std::runtime_error);
+}
+
+// Test sumColumns() on an empty matrix (should throw an exception)
+TEST(MatrixTest, SumColumnsEmpty) {
+    Matrix mat(3, 0);  // 0 columns
+    EXPECT_THROW(mat.sumColumns(), std::runtime_error);
+}
+
+// Test for isEmpty method with 0 size on any dimension
+TEST(MatrixTest, IsEmptyWithZeroSize) {
+    Matrix zeroRowMatrix(0, 3);
+    EXPECT_TRUE(zeroRowMatrix.isEmpty());
+
+    Matrix zeroColMatrix(3, 0);
+    EXPECT_TRUE(zeroColMatrix.isEmpty());
+}
+
+// Test for isEmpty method with matrix containing only zeroes
+TEST(MatrixTest, IsEmptyWithZeroes) {
+    Matrix zeroMatrix(3, 3);
+    zeroMatrix.setData(0.0);
+    EXPECT_FALSE(zeroMatrix.isEmpty(false));
+    EXPECT_TRUE(zeroMatrix.isEmpty(true));
+}
+
+// Test for isEmpty method with matrix containing non-zero elements
+TEST(MatrixTest, IsEmptyWithNonZeroElements) {
+    Matrix nonZeroMatrix(3, 3);
+    nonZeroMatrix.setData({{1.0, 0.0, 0.0}, {0.0, 2.0, 0.0}, {0.0, 0.0, 3.0}});
+    EXPECT_FALSE(nonZeroMatrix.isEmpty(false));
+    EXPECT_FALSE(nonZeroMatrix.isEmpty(true));
+}
+
+
 TEST(MatrixTest, FileIO) {
     Matrix A(2, 2, "MatrixA");
     std::istringstream iss("1 2\n3 4");
@@ -274,3 +344,17 @@ TEST(MatrixTest, ScalarMultiplication) {
                                   "       6        8 \n";
     EXPECT_EQ(oss.str(), expected_output);
 }
+
+TEST(MatrixTest, ScalarDivision) {
+    Matrix m(2, 2, "Matrix");
+    std::istringstream iss("2 4\n6 8");
+    iss >> m;
+
+    Matrix result = m / 2.0f;
+    std::ostringstream oss;
+    oss << result;
+    std::string expected_output = "       1        2 \n"
+                                  "       3        4 \n";
+    EXPECT_EQ(oss.str(), expected_output);
+}
+

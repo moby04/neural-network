@@ -11,10 +11,11 @@ protected:
     Matrix weights;
     Matrix biases;
     std::shared_ptr<ActivationFunction> activation;
+    Matrix inputCache;
 
 public:
     Layer(size_t inputSize, size_t neurons, std::shared_ptr<ActivationFunction> activationFunc)
-        : weights(neurons, inputSize), biases(neurons, 1), activation(activationFunc) {}
+        : weights(neurons, inputSize), biases(neurons, 1), activation(activationFunc), inputCache(inputSize, 1)  {}
     virtual ~Layer() = default;
 
     virtual Matrix forward(const Matrix& input) = 0;
@@ -23,6 +24,7 @@ public:
     // Getters for weights and biases
     const Matrix& getWeights() const;
     const Matrix& getBiases() const;
+    const Matrix& getInputCache() const;
 
     // Setters for weights and biases
     void setWeights(const Matrix& w);

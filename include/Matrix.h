@@ -54,8 +54,13 @@ public:
     std::span<const double> getCol(size_t col) const;
 
     // Setters
-    void setData(const std::vector<std::vector<double>>& newData);
-    void setData(double value);
+    Matrix& setData(const std::vector<std::vector<double>>& newData);
+    Matrix& setData(double value);
+
+    bool isEmpty(bool checkForNonZeroData = false) const;
+
+    Matrix sumRows() const;    // Sums across rows, returns column vector
+    Matrix sumColumns() const;
 
     // Friend functions for overloading the << and >> operators
     friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
@@ -66,6 +71,7 @@ public:
     Matrix operator-(const Matrix& other) const;
     Matrix operator*(const Matrix& other) const;
     Matrix operator*(double scalar) const;
+    Matrix operator/(double scalar) const;
 
     double& operator()(size_t row, size_t col);
     const double& operator()(size_t row, size_t col) const;

@@ -1,0 +1,34 @@
+#ifndef RNN_LAYER_H
+#define RNN_LAYER_H
+
+#include "StatefulLayer.h"
+#include "../Matrix.h"
+
+/**
+ * A Simple RNN unit operates using the following update rule:
+ * ht = tanh(Wx * xt + Wh * h(t-1) + b)
+ * 
+ * where:
+ * ht - is the hidden state at time t
+ * xt - is the input at time t
+ * Wx - is the input-to-hidden weight matrix
+ * Wh - is the hidden-to-hidden weight matrix
+ * b - is the bias
+ * h(t-1) - is the hidden state at time t-1
+ */
+class RNNLayer : public StatefulLayer {
+    private:
+        Matrix W_x, W_h, b, hiddenState;
+    
+    public:
+        RNNLayer(size_t inputSize, size_t hiddenSize);
+    
+        void resetStates() override;
+    
+        Matrix forward(const Matrix& input) override;
+        Matrix backward(const Matrix& gradOutput) override;
+
+        Matrix getHiddenState() const;
+    };
+
+    #endif

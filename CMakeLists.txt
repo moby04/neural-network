@@ -26,7 +26,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 # Add test executable
-file(GLOB TEST_SOURCES "tests/test_*.cpp" "src/*.cpp" "src/*/*.cpp")
+file(GLOB TEST_SOURCES "tests/test_*.cpp" "tests/*/test_*.cpp" "src/*.cpp" "src/*/*.cpp")
 list(REMOVE_ITEM TEST_SOURCES "${CMAKE_SOURCE_DIR}/src/main.cpp")
 add_executable(NeuralNetworkTests ${TEST_SOURCES})
 

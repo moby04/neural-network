@@ -3,6 +3,7 @@
 #include "../include/Matrix.h"
 
 int main() {
+    std::cout << "Ali is stupid" << std::endl;
     Matrix m1 = Matrix::createIdentityMatrix(3, "IdentityMatrix");
     m1.print();
 

@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../include/DropoutLayer.h"
+#include "../../include/Layer/DropoutLayer.h"
 
 // Test Dropout Layer does not change input shape
 TEST(DropoutLayerTest, OutputShapeUnchanged) {

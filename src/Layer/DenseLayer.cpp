@@ -2,16 +2,23 @@
 
 // -------------------- DenseLayer Constructor --------------------
 DenseLayer::DenseLayer(size_t inputSize, size_t neurons, std::shared_ptr<ActivationFunction> activationFunc)
-    : Layer(inputSize, neurons, std::move(activationFunc)), inputCache(inputSize, 1)  {
-    weights.randomize(-1.0f, 1.0f);
-    biases.randomize(-1.0f, 1.0f);
+        : StatefulLayer(inputSize, neurons, activationFunc),
+          weights(neurons, inputSize, "weights"),
+          biases(neurons, 1, "biases") {
+    weights.randomize();
+    biases.randomize();
 }
 
-// -------------------- Forward Propagation --------------------
+void DenseLayer::resetStates() {
+    clearInputCache(); // Only clears inputCache, no other state variables
+}
+
 Matrix DenseLayer::forward(const Matrix& input) {
     inputCache = input;
-    Matrix weightedSum = weights.multiply(input, false) + biases;  // W * X + B
-    return activation->apply(weightedSum);  // Apply activation function
+
+    Matrix output = (weights.multiply(input, false) + biases);
+
+    return activation->apply(output);
 }
 
 // -------------------- Backward Propagation --------------------

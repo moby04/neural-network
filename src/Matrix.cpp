@@ -47,7 +47,7 @@ std::span<const double> Matrix::getCol(size_t col) const {
     return std::span<const double>(colData);
 }
 
-void Matrix::setData(const std::vector<std::vector<double>>& newData) {
+Matrix& Matrix::setData(const std::vector<std::vector<double>>& newData) {
     if (newData.empty()) {
         throw std::invalid_argument("Data cannot be empty.");
     }
@@ -60,14 +60,66 @@ void Matrix::setData(const std::vector<std::vector<double>>& newData) {
     data = newData;
     rows = newData.size();
     cols = newCols;
+
+    return *this;
 }
 
-void Matrix::setData(double value) {
+Matrix& Matrix::setData(double value) {
     for (size_t i = 0; i < rows; ++i) {
         for (size_t j = 0; j < cols; ++j) {
             data[i][j] = value;
         }
     }
+    return *this;
+}
+
+bool Matrix::isEmpty(bool checkForNonZeroData ) const {
+    if (rows == 0 || cols == 0 || data.empty()) {
+        return true;
+    }
+    if (checkForNonZeroData) {
+        for (const auto& row : data) {
+            for (double value : row) {
+                if (value != 0.0) {
+                    return false;  // Matrix has meaningful data
+                }
+            }
+        }
+        return true;  // Only zero values are present
+    }
+    return false;  // Matrix exists with allocated space
+}
+
+Matrix Matrix::sumRows() const {
+    if (rows == 0 || cols == 0 || data.empty()) {
+        throw std::runtime_error("Cannot sum rows of an empty matrix.");
+    }
+
+    Matrix result(rows, 1, "sumRows");
+    for (size_t i = 0; i < rows; i++) {
+        double sum = 0.0;
+        for (size_t j = 0; j < cols; j++) {
+            sum += data[i][j];
+        }
+        result(i, 0) = sum;
+    }
+    return result;
+}
+
+Matrix Matrix::sumColumns() const {
+    if (rows == 0 || cols == 0 || data.empty()) {
+        throw std::runtime_error("Cannot sum rows of an empty matrix.");
+    }
+
+    Matrix result(1, cols, "sumColumns");
+    for (size_t j = 0; j < cols; j++) {
+        double sum = 0.0;
+        for (size_t i = 0; i < rows; i++) {
+            sum += data[i][j];
+        }
+        result(0, j) = sum;
+    }
+    return result;
 }
 
 void Matrix::fillByHand() {
@@ -186,6 +238,10 @@ Matrix Matrix::operator*(const Matrix& other) const {
 
 Matrix Matrix::operator*(double scalar) const {
     return multiply(scalar);
+}
+
+Matrix Matrix::operator/(double scalar) const {
+    return multiply(1/scalar);
 }
 
 double& Matrix::operator()(size_t row, size_t col) {

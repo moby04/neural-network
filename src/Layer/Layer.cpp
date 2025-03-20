@@ -21,3 +21,7 @@ void Layer::setBiases(const Matrix& b) {
     }
     biases = b;
 }
+
+const Matrix& Layer::getInputCache() const {
+    return inputCache;
+}
