@@ -55,16 +55,18 @@ Matrix& Matrix::setData(double value) {
 }
 
 // Utility Methods
-void Matrix::fillByHand() {
+Matrix& Matrix::fillByHand() {
     std::cin >> *this;
+    return *this;
 }
 
-void Matrix::print() const {
+Matrix& Matrix::print() const {
     std::cout << "Matrix name: " << name << "\n";
     std::cout << *this;
+    return const_cast<Matrix&>(*this);
 }
 
-void Matrix::randomize(double min, double max) {
+Matrix& Matrix::randomize(double min, double max) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(min, max);
@@ -74,6 +76,7 @@ void Matrix::randomize(double min, double max) {
             data[i][j] = dis(gen);
         }
     }
+    return *this;
 }
 
 Matrix Matrix::applyFunction(const std::function<double(double)>& func) const {

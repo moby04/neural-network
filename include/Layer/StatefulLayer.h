@@ -25,13 +25,15 @@ public:
     /**
      * @brief Resets the internal state (must be implemented by derived classes).
      */
-    virtual void resetStates() = 0;
+    virtual StatefulLayer& resetStates() = 0;
 
     /**
      * @brief Clears inputCache (used in resetStates implementations).
+     * @return Reference to the current object for chaining.
      */
-    void clearInputCache() {
+    StatefulLayer& clearInputCache() {
         inputCache.setData(0.0);
+        return *this;
     }
 
     // Getters

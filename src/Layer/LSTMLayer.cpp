@@ -21,10 +21,11 @@ LSTMLayer::LSTMLayer(size_t inputSize, size_t hiddenSize)
 }
 
 // State Management
-void LSTMLayer::resetStates() {
+LSTMLayer& LSTMLayer::resetStates() {
     hiddenState.setData(0.0);
     cellState.setData(0.0);
     clearInputCache();
+    return *this;
 }
 
 // Forward Propagation

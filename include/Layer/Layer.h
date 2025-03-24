@@ -52,8 +52,8 @@ public:
     const Matrix& getInputCache() const;
 
     // Setters for weights and biases
-    void setWeights(const Matrix& w);
-    void setBiases(const Matrix& b);
+    Layer& setWeights(const Matrix& w);
+    Layer& setBiases(const Matrix& b);
 };
 
 #endif // LAYER_H

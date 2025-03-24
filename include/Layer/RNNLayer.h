@@ -34,9 +34,10 @@ class RNNLayer : public StatefulLayer {
         RNNLayer(size_t inputSize, size_t hiddenSize);
     
         // State Management
-        void resetStates() override {
+        RNNLayer& resetStates() override {
             hiddenState.setData(0.0);
             clearInputCache();  
+            return *this;
         }
     
         // Forward and Backward Propagation

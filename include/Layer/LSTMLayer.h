@@ -24,7 +24,7 @@ public:
     LSTMLayer(size_t inputSize, size_t hiddenSize);
 
     // State Management
-    void resetStates(); // Resets hidden and cell states
+    LSTMLayer& resetStates() override; // Resets hidden and cell states
 
     // Forward and Backward Propagation
     Matrix forward(const Matrix& input) override;

@@ -101,14 +101,14 @@ public:
     /**
      * @brief Fill the matrix by hand (from console input).
      */
-    void fillByHand();
+    Matrix& fillByHand();
 
     /**
      * @brief Print the matrix to the console.
      * 
      * This method prints the matrix along with its name to the console.
      */
-    void print() const;
+    Matrix& print() const;
 
     /**
      * @brief Randomize the matrix elements within a given range.
@@ -116,7 +116,7 @@ public:
      * @param min Minimum value.
      * @param max Maximum value.
      */
-    void randomize(double min = 0.0, double max = 1.0);
+    Matrix& randomize(double min = 0.0, double max = 1.0);
 
     /**
      * @brief Apply a function to each element of the matrix.

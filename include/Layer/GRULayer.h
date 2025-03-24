@@ -25,13 +25,15 @@ public:
     GRULayer(size_t inputSize, size_t hiddenSize);
 
     // State Management
-    inline void resetStates() override {
+    inline GRULayer& resetStates() override {
         resetHiddenState();
         clearInputCache();
+        return *this;
     }
 
-    void resetHiddenState() {
+    GRULayer& resetHiddenState() {
         hiddenState.setData(0.0);
+        return *this;
     }
 
     // Forward and Backward Propagation

@@ -18,8 +18,9 @@ public:
         return gradOutput;
     }
 
-    void resetStates() override {
+    TestStatefulLayer& resetStates() override {
         // empty function just to make the class instantiable
+        return *this;
     }
 };
 

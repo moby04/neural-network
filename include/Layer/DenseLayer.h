@@ -22,8 +22,9 @@ public:
     DenseLayer(size_t inputSize, size_t neurons, std::shared_ptr<ActivationFunction> activationFunc);
 
     // State Management
-    inline void resetStates() override {
+    inline DenseLayer& resetStates() override {
         clearInputCache(); // Only clears inputCache, no other state variables
+        return *this;
     }
 
     // Forward and Backward Propagation
