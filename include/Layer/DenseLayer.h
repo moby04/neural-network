@@ -18,11 +18,15 @@ class DenseLayer : public StatefulLayer {
 private:
     Matrix weights, biases;
 public:
+    // Constructor
     DenseLayer(size_t inputSize, size_t neurons, std::shared_ptr<ActivationFunction> activationFunc);
+
+    // State Management
+    void resetStates() override;
+
+    // Forward and Backward Propagation
     Matrix forward(const Matrix& input) override;
     Matrix backward(const Matrix& gradient) override;
-
-    void resetStates() override;
 };
 
 #endif

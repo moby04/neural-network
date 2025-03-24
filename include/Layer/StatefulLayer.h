@@ -15,22 +15,33 @@ protected:
     Matrix inputCache;
 
 public:
+    // Constructor and Destructor
     StatefulLayer(size_t inputSize, size_t neurons, std::shared_ptr<ActivationFunction> activationFunc)
         : Layer(inputSize, neurons, activationFunc), inputCache(inputSize, 1) {}
 
     virtual ~StatefulLayer() = default;
 
-    // Resets the internal state (must be implemented by derived classes)
+    // State Management
+    /**
+     * @brief Resets the internal state (must be implemented by derived classes).
+     */
     virtual void resetStates() = 0;
 
-    // Getter for input cache
-    const Matrix& getInputCache() const {
-        return inputCache;
-    }
-
-    // Clears inputCache (used in resetStates implementations)
+    /**
+     * @brief Clears inputCache (used in resetStates implementations).
+     */
     void clearInputCache() {
         inputCache.setData(0.0);
+    }
+
+    // Getters
+    /**
+     * @brief Getter for input cache.
+     * 
+     * @return The input cache matrix.
+     */
+    const Matrix& getInputCache() const {
+        return inputCache;
     }
 };
 

@@ -20,12 +20,17 @@ private:
     Matrix cellState; // Stores long-term memory
 
 public:
+    // Constructor
     LSTMLayer(size_t inputSize, size_t hiddenSize);
 
-    Matrix forward(const Matrix& input) override;
-    Matrix backward(const Matrix& gradOutput) override;
+    // State Management
     void resetStates(); // Resets hidden and cell states
 
+    // Forward and Backward Propagation
+    Matrix forward(const Matrix& input) override;
+    Matrix backward(const Matrix& gradOutput) override;
+
+    // Getters
     Matrix getHiddenState() const;
     Matrix getCellState() const;
 };

@@ -2,6 +2,7 @@
 #include "../../include/ActivationFunctions/ActivationFunctions.h"
 #include <cmath>
 
+// Constructor
 LSTMLayer::LSTMLayer(size_t inputSize, size_t hiddenSize)
         : StatefulLayer(inputSize, hiddenSize, nullptr),
         W_f(inputSize, hiddenSize, "W_f"), W_i(inputSize, hiddenSize, "W_i"),
@@ -19,6 +20,14 @@ LSTMLayer::LSTMLayer(size_t inputSize, size_t hiddenSize)
     cellState.setData(0.0);
 }
 
+// State Management
+void LSTMLayer::resetStates() {
+    hiddenState.setData(0.0);
+    cellState.setData(0.0);
+    clearInputCache();
+}
+
+// Forward Propagation
 Matrix LSTMLayer::forward(const Matrix& input) {
     if (input.isEmpty()) {
         throw std::runtime_error("Forward pass: Input matrix is empty.");
@@ -49,6 +58,7 @@ Matrix LSTMLayer::forward(const Matrix& input) {
     return hiddenState;
 }
 
+// Backward Propagation
 Matrix LSTMLayer::backward(const Matrix& gradOutput) {
     if (inputCache.isEmpty(true)) {
         throw std::runtime_error("Backward pass: forward() must be called before backward().");
@@ -83,12 +93,7 @@ Matrix LSTMLayer::backward(const Matrix& gradOutput) {
     return gradOutput.multiply(W_f.transpose(), false);
 }
 
-void LSTMLayer::resetStates() {
-    hiddenState.setData(0.0);
-        cellState.setData(0.0);
-        clearInputCache();
-    }
-
+// Getters
 Matrix LSTMLayer::getHiddenState() const {
     return hiddenState;
 }

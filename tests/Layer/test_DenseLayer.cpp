@@ -13,6 +13,23 @@ TEST(DenseLayerTest, Initialization) {
     EXPECT_EQ(layer.getBiases().getCols(), 1);
 }
 
+// Test Setting Custom Weights and Biases
+TEST(DenseLayerTest, SetWeightsAndBiases) {
+    auto activation = std::make_shared<SigmoidActivation>();
+    DenseLayer layer(3, 2, activation);
+
+    Matrix weights(2, 3);
+    weights.setData({{0.1f, 0.2f, 0.3f}, {0.4f, 0.5f, 0.6f}});
+    layer.setWeights(weights);
+
+    Matrix biases(2, 1);
+    biases.setData({{0.1f}, {0.2f}});
+    layer.setBiases(biases);
+
+    EXPECT_EQ(layer.getWeights(), weights);
+    EXPECT_EQ(layer.getBiases(), biases);
+}
+
 // Test DenseLayer Forward Propagation with Sigmoid Activation
 TEST(DenseLayerTest, ForwardPropagationSigmoid) {
     std::shared_ptr<ActivationFunction> sigmoid = std::make_shared<SigmoidActivation>();
@@ -40,21 +57,4 @@ TEST(DenseLayerTest, ForwardPropagationReLU) {
     EXPECT_EQ(output.getRows(), 2);
     EXPECT_EQ(output.getCols(), 1);
     EXPECT_GE(output.getData()[0][0], 0.0);  // Ensure ReLU does not produce negative values
-}
-
-// Test Setting Custom Weights and Biases
-TEST(DenseLayerTest, SetWeightsAndBiases) {
-    auto activation = std::make_shared<SigmoidActivation>();
-    DenseLayer layer(3, 2, activation);
-
-    Matrix weights(2, 3);
-    weights.setData({{0.1f, 0.2f, 0.3f}, {0.4f, 0.5f, 0.6f}});
-    layer.setWeights(weights);
-
-    Matrix biases(2, 1);
-    biases.setData({{0.1f}, {0.2f}});
-    layer.setBiases(biases);
-
-    EXPECT_EQ(layer.getWeights(), weights);
-    EXPECT_EQ(layer.getBiases(), biases);
 }

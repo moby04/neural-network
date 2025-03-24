@@ -30,14 +30,18 @@ class RNNLayer : public StatefulLayer {
         Matrix W_x, W_h, b, hiddenState;
     
     public:
+        // Constructor
         RNNLayer(size_t inputSize, size_t hiddenSize);
     
+        // State Management
         void resetStates() override;
     
+        // Forward and Backward Propagation
         Matrix forward(const Matrix& input) override;
         Matrix backward(const Matrix& gradOutput) override;
 
+        // Getters
         Matrix getHiddenState() const;
-    };
+};
 
-    #endif
+#endif

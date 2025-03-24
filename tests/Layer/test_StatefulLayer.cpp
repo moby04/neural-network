@@ -23,15 +23,6 @@ public:
     }
 };
 
-// Test for getting input cache
-TEST(StatefulLayerTest, GetInputCache) {
-    TestStatefulLayer layer;
-    Matrix input(1, 1);
-    input.setData({{1.0}});
-    layer.forward(input);
-    EXPECT_EQ(layer.getInputCache().getData()[0][0], 1.0);
-}
-
 // Test for clearing input cache
 TEST(StatefulLayerTest, ClearInputCache) {
     TestStatefulLayer layer;
@@ -40,4 +31,13 @@ TEST(StatefulLayerTest, ClearInputCache) {
     layer.forward(input);
     layer.clearInputCache();
     EXPECT_TRUE(layer.getInputCache().isEmpty(true));
+}
+
+// Test for getting input cache
+TEST(StatefulLayerTest, GetInputCache) {
+    TestStatefulLayer layer;
+    Matrix input(1, 1);
+    input.setData({{1.0}});
+    layer.forward(input);
+    EXPECT_EQ(layer.getInputCache().getData()[0][0], 1.0);
 }

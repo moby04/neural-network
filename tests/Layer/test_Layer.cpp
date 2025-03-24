@@ -19,15 +19,6 @@ public:
     }
 };
 
-// Test for setting and getting biases
-TEST(LayerTest, SetGetBiases) {
-    TestLayer layer;
-    Matrix biases(1, 1);
-    biases.setData({{0.5}});
-    layer.setBiases(biases);
-    EXPECT_EQ(layer.getBiases().getData()[0][0], 0.5);
-}
-
 // Test for setting and getting weights
 TEST(LayerTest, SetGetWeights) {
     TestLayer layer;
@@ -35,4 +26,13 @@ TEST(LayerTest, SetGetWeights) {
     weights.setData({{0.8}});
     layer.setWeights(weights);
     EXPECT_EQ(layer.getWeights().getData()[0][0], 0.8);
+}
+
+// Test for setting and getting biases
+TEST(LayerTest, SetGetBiases) {
+    TestLayer layer;
+    Matrix biases(1, 1);
+    biases.setData({{0.5}});
+    layer.setBiases(biases);
+    EXPECT_EQ(layer.getBiases().getData()[0][0], 0.5);
 }

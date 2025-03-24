@@ -1,22 +1,15 @@
 #include "../include/Matrix.h"
 
+// Constructors and Destructor
 Matrix::Matrix(size_t rows, size_t cols, const std::string& name)
     : rows(rows), cols(cols), name(name), data(rows, std::vector<double>(cols, 0.0)) {}
 
-// Copy constructor
 Matrix::Matrix(const Matrix& other)
     : name(other.name), rows(other.rows), cols(other.cols), data(other.data) {}
 
 Matrix::~Matrix() {}
 
-void Matrix::setName(const std::string& name) {
-    this->name = name;
-}
-
-std::string Matrix::getName() const {
-    return name;
-}
-
+// Getters
 size_t Matrix::getRows() const {
     return rows;
 }
@@ -47,6 +40,15 @@ std::span<const double> Matrix::getCol(size_t col) const {
     return std::span<const double>(colData);
 }
 
+std::string Matrix::getName() const {
+    return name;
+}
+
+// Setters
+void Matrix::setName(const std::string& name) {
+    this->name = name;
+}
+
 Matrix& Matrix::setData(const std::vector<std::vector<double>>& newData) {
     if (newData.empty()) {
         throw std::invalid_argument("Data cannot be empty.");
@@ -73,6 +75,46 @@ Matrix& Matrix::setData(double value) {
     return *this;
 }
 
+// Utility Methods
+void Matrix::fillByHand() {
+    std::cin >> *this;
+}
+
+void Matrix::print() const {
+    std::cout << "Matrix name: " << name << "\n";
+    std::cout << *this;
+}
+
+void Matrix::randomize(double min, double max) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(min, max);
+
+    for (size_t i = 0; i < rows; ++i) {
+        for (size_t j = 0; j < cols; ++j) {
+            data[i][j] = dis(gen);
+        }
+    }
+}
+
+Matrix Matrix::applyFunction(const std::function<double(double)>& func) const {
+    Matrix result(rows, cols, "Result");
+    for (size_t i = 0; i < rows; ++i) {
+        for (size_t j = 0; j < cols; ++j) {
+            result.data[i][j] = func(data[i][j]);
+        }
+    }
+    return result;
+}
+
+Matrix Matrix::createIdentityMatrix(size_t size, const std::string& name) {
+    Matrix identity(size, size, name);
+    for (size_t i = 0; i < size; ++i) {
+        identity.data[i][i] = 1.0;
+    }
+    return identity;
+}
+
 bool Matrix::isEmpty(bool checkForNonZeroData ) const {
     if (rows == 0 || cols == 0 || data.empty()) {
         return true;
@@ -90,55 +132,7 @@ bool Matrix::isEmpty(bool checkForNonZeroData ) const {
     return false;  // Matrix exists with allocated space
 }
 
-Matrix Matrix::sumRows() const {
-    if (rows == 0 || cols == 0 || data.empty()) {
-        throw std::runtime_error("Cannot sum rows of an empty matrix.");
-    }
-
-    Matrix result(rows, 1, "sumRows");
-    for (size_t i = 0; i < rows; i++) {
-        double sum = 0.0;
-        for (size_t j = 0; j < cols; j++) {
-            sum += data[i][j];
-        }
-        result(i, 0) = sum;
-    }
-    return result;
-}
-
-Matrix Matrix::sumColumns() const {
-    if (rows == 0 || cols == 0 || data.empty()) {
-        throw std::runtime_error("Cannot sum rows of an empty matrix.");
-    }
-
-    Matrix result(1, cols, "sumColumns");
-    for (size_t j = 0; j < cols; j++) {
-        double sum = 0.0;
-        for (size_t i = 0; i < rows; i++) {
-            sum += data[i][j];
-        }
-        result(0, j) = sum;
-    }
-    return result;
-}
-
-void Matrix::fillByHand() {
-    std::cin >> *this;
-}
-
-void Matrix::print() const {
-    std::cout << "Matrix name: " << name << "\n";
-    std::cout << *this;
-}
-
-Matrix Matrix::createIdentityMatrix(size_t size, const std::string& name) {
-    Matrix identity(size, size, name);
-    for (size_t i = 0; i < size; ++i) {
-        identity.data[i][i] = 1.0;
-    }
-    return identity;
-}
-
+// Matrix Operations
 Matrix Matrix::add(const Matrix& other) const {
     if (rows != other.rows || cols != other.cols) {
         throw std::invalid_argument("Matrices must have the same dimensions for addition.");
@@ -214,16 +208,39 @@ Matrix Matrix::transpose() const {
     return result;
 }
 
-Matrix Matrix::applyFunction(const std::function<double(double)>& func) const {
-    Matrix result(rows, cols, "Result");
-    for (size_t i = 0; i < rows; ++i) {
-        for (size_t j = 0; j < cols; ++j) {
-            result.data[i][j] = func(data[i][j]);
+Matrix Matrix::sumRows() const {
+    if (rows == 0 || cols == 0 || data.empty()) {
+        throw std::runtime_error("Cannot sum rows of an empty matrix.");
+    }
+
+    Matrix result(rows, 1, "sumRows");
+    for (size_t i = 0; i < rows; i++) {
+        double sum = 0.0;
+        for (size_t j = 0; j < cols; j++) {
+            sum += data[i][j];
         }
+        result(i, 0) = sum;
     }
     return result;
 }
 
+Matrix Matrix::sumColumns() const {
+    if (rows == 0 || cols == 0 || data.empty()) {
+        throw std::runtime_error("Cannot sum rows of an empty matrix.");
+    }
+
+    Matrix result(1, cols, "sumColumns");
+    for (size_t j = 0; j < cols; j++) {
+        double sum = 0.0;
+        for (size_t i = 0; i < rows; i++) {
+            sum += data[i][j];
+        }
+        result(0, j) = sum;
+    }
+    return result;
+}
+
+// Overloaded Operators
 Matrix Matrix::operator+(const Matrix& other) const {
     return add(other);
 }
@@ -310,18 +327,7 @@ bool Matrix::isEqual(const Matrix& other, double tolerance) const {
     return true;
 }
 
-void Matrix::randomize(double min, double max) {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dis(min, max);
-
-    for (size_t i = 0; i < rows; ++i) {
-        for (size_t j = 0; j < cols; ++j) {
-            data[i][j] = dis(gen);
-        }
-    }
-}
-
+// Friend functions for overloading the << and >> operators
 std::ostream& operator<<(std::ostream& os, const Matrix& matrix) {
     for (size_t i = 0; i < matrix.rows; ++i) {
         for (size_t j = 0; j < matrix.cols; ++j) {

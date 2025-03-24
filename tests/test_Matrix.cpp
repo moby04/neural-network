@@ -5,6 +5,7 @@
 #include <fstream>
 #include <cmath>
 
+// Constructors and Destructor
 TEST(MatrixTest, CreateIdentityMatrix) {
     Matrix m = Matrix::createIdentityMatrix(3, "IdentityMatrix");
     std::ostringstream oss;
@@ -21,6 +22,7 @@ TEST(MatrixTest, SetName) {
     EXPECT_EQ(m.getName(), "NewName");
 }
 
+// Utility Methods
 TEST(MatrixTest, FillByHand) {
     Matrix m(2, 2, "TestMatrix");
     std::istringstream iss("1 2\n3 4");
@@ -138,7 +140,7 @@ TEST(MatrixTest, IsEmptyWithNonZeroElements) {
     EXPECT_FALSE(nonZeroMatrix.isEmpty(true));
 }
 
-
+// Test for file input/output
 TEST(MatrixTest, FileIO) {
     Matrix A(2, 2, "MatrixA");
     std::istringstream iss("1 2\n3 4");
@@ -156,6 +158,7 @@ TEST(MatrixTest, FileIO) {
     EXPECT_TRUE(A.isEqual(B)); // Ensure the loaded matrix matches the saved one
 }
 
+// Matrix Operations
 TEST(MatrixTest, AddMatrices) {
     Matrix m1(2, 2, "Matrix1");
     std::istringstream iss1("1 2\n3 4");
@@ -204,6 +207,7 @@ TEST(MatrixTest, TransposeMatrix) {
     EXPECT_EQ(oss.str(), expected_output);
 }
 
+// Overloaded Operators
 TEST(MatrixTest, CompareMatricesEqual) {
     Matrix m1(2, 2, "Matrix1");
     std::istringstream iss1("1 2\n3 4");

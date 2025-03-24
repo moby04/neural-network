@@ -20,10 +20,12 @@ protected:
     Matrix inputCache;
 
 public:
+    // Constructor and Destructor
     Layer(size_t inputSize, size_t neurons, std::shared_ptr<ActivationFunction> activationFunc)
         : weights(neurons, inputSize), biases(neurons, 1), activation(activationFunc), inputCache(inputSize, 1)  {}
     virtual ~Layer() = default;
 
+    // Forward and Backward Propagation
     /**
      * @brief Perform the forward pass through the layer.
      * 

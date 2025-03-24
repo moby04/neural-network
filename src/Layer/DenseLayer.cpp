@@ -1,6 +1,6 @@
 #include "../../include/Layer/DenseLayer.h"
 
-// -------------------- DenseLayer Constructor --------------------
+// Constructor
 DenseLayer::DenseLayer(size_t inputSize, size_t neurons, std::shared_ptr<ActivationFunction> activationFunc)
         : StatefulLayer(inputSize, neurons, activationFunc),
           weights(neurons, inputSize, "weights"),
@@ -9,10 +9,12 @@ DenseLayer::DenseLayer(size_t inputSize, size_t neurons, std::shared_ptr<Activat
     biases.randomize();
 }
 
+// State Management
 void DenseLayer::resetStates() {
     clearInputCache(); // Only clears inputCache, no other state variables
 }
 
+// Forward Propagation
 Matrix DenseLayer::forward(const Matrix& input) {
     inputCache = input;
 
@@ -21,7 +23,7 @@ Matrix DenseLayer::forward(const Matrix& input) {
     return activation->apply(output);
 }
 
-// -------------------- Backward Propagation --------------------
+// Backward Propagation
 Matrix DenseLayer::backward(const Matrix& gradient) {
     // Compute activation gradient
     Matrix activationGradient = activation->applyDerivative(forward(inputCache));  // ✅ Now works!

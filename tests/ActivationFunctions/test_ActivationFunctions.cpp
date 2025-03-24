@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "../../include/ActivationFunctions/ActivationFunctions.h"
 
-// // Test Sigmoid Activation Function
+// Test Sigmoid Activation Function
 TEST(ActivationFunctionTest, SigmoidFunction) {
     SigmoidActivation sigmoid;
     Matrix input(2, 2);

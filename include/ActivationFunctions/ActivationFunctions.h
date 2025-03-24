@@ -12,6 +12,7 @@ class ActivationFunction {
     public:
         virtual ~ActivationFunction() = default;
 
+        // Forward Propagation
         /**
          * @brief Apply the activation function to the input.
          * 
@@ -22,6 +23,7 @@ class ActivationFunction {
          */
         virtual Matrix apply(const Matrix& input) const = 0;
 
+        // Backward Propagation
         /**
          * @brief Apply the derivative of the activation function to the input.
          * 

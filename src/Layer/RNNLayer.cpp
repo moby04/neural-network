@@ -1,6 +1,7 @@
 #include "../../include/Layer/RNNLayer.h"
 #include <cmath>
 
+// Constructor
 RNNLayer::RNNLayer(size_t inputSize, size_t hiddenSize)
         : StatefulLayer(inputSize, hiddenSize, nullptr),
         W_x(inputSize, hiddenSize, "W_x"),
@@ -13,11 +14,13 @@ RNNLayer::RNNLayer(size_t inputSize, size_t hiddenSize)
     hiddenState.setData(0.0);
 }
 
+// State Management
 void RNNLayer::resetStates() {
     hiddenState.setData(0.0);
     clearInputCache();
 }
 
+// Forward Propagation
 Matrix RNNLayer::forward(const Matrix& input) {
     inputCache = input; 
 
@@ -29,7 +32,7 @@ Matrix RNNLayer::forward(const Matrix& input) {
     return hiddenState; // Output is also the hidden state
 }
 
-
+// Backward Propagation
 Matrix RNNLayer::backward(const Matrix& gradOutput) {
     Matrix ones(hiddenState.getRows(), hiddenState.getCols(), "Ones");
     ones.setData(1.0); 
@@ -40,6 +43,7 @@ Matrix RNNLayer::backward(const Matrix& gradOutput) {
     return dHidden.multiply(W_x.transpose(), false);
 }
 
+// Getters
 Matrix RNNLayer::getHiddenState() const {
     return hiddenState;
 }

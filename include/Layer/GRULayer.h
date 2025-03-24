@@ -21,14 +21,18 @@ private:
     Matrix hiddenState;    // Hidden state
 
 public:
+    // Constructor
     GRULayer(size_t inputSize, size_t hiddenSize);
 
+    // State Management
+    void resetStates() override;
+    void resetHiddenState();
+
+    // Forward and Backward Propagation
     Matrix forward(const Matrix& input) override;
     Matrix backward(const Matrix& gradOutput) override;
-    
-    void resetStates() override;
 
-    void resetHiddenState();
+    // Getters
     Matrix getHiddenState() const;
 };
 

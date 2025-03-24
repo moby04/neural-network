@@ -15,23 +15,6 @@ TEST(RNNLayerTest, ForwardPass) {
     EXPECT_FALSE(output.isEmpty());
 }
 
-TEST(RNNLayerTest, InputCacheUpdatedInForward) {
-    RNNLayer rnn(3, 2);  // Input size: 3, Hidden size: 2
-    Matrix input(1, 3);
-    input.setData({{1.0, 0.5, -0.5}});
-
-    rnn.forward(input);
-
-    // Access inputCache from Layer class (assuming protected or a getter method exists)
-    Matrix cachedInput = rnn.getInputCache(); 
-
-    EXPECT_EQ(cachedInput.getRows(), 1);
-    EXPECT_EQ(cachedInput.getCols(), 3);
-    EXPECT_EQ(cachedInput.getData()[0][0], 1.0);
-    EXPECT_EQ(cachedInput.getData()[0][1], 0.5);
-    EXPECT_EQ(cachedInput.getData()[0][2], -0.5);
-}
-
 // Test RNN Backward Pass
 TEST(RNNLayerTest, BackwardPass) {
     RNNLayer rnn(3, 2);
@@ -47,6 +30,23 @@ TEST(RNNLayerTest, BackwardPass) {
     EXPECT_EQ(gradInput.getRows(), 1);
     EXPECT_EQ(gradInput.getCols(), 3);
     EXPECT_FALSE(gradInput.isEmpty());
+}
+
+TEST(RNNLayerTest, InputCacheUpdatedInForward) {
+    RNNLayer rnn(3, 2);  // Input size: 3, Hidden size: 2
+    Matrix input(1, 3);
+    input.setData({{1.0, 0.5, -0.5}});
+
+    rnn.forward(input);
+
+    // Access inputCache from Layer class (assuming protected or a getter method exists)
+    Matrix cachedInput = rnn.getInputCache(); 
+
+    EXPECT_EQ(cachedInput.getRows(), 1);
+    EXPECT_EQ(cachedInput.getCols(), 3);
+    EXPECT_EQ(cachedInput.getData()[0][0], 1.0);
+    EXPECT_EQ(cachedInput.getData()[0][1], 0.5);
+    EXPECT_EQ(cachedInput.getData()[0][2], -0.5);
 }
 
 // Test Hidden State Reset

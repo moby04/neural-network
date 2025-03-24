@@ -24,12 +24,10 @@ private:
     std::string name;
     size_t rows;
     size_t cols;
-    // Vector handles the memory management so it's better for handling data owned by the object.
-    // on the other hand span<> used below is a non-owning reference that is faster and more efficient
-    // so it's better for passing data to and from functions.
     std::vector<std::vector<double>> data; 
 
 public:
+    // Constructors and Destructor
     /**
      * @brief Construct a new Matrix object.
      * 
@@ -51,6 +49,15 @@ public:
      */
     ~Matrix();
 
+    // Getters
+    size_t getRows() const;
+    size_t getCols() const;
+    const std::vector<std::vector<double>>& getData() const;
+    std::span<const double> getRow(size_t row) const;
+    std::span<const double> getCol(size_t col) const;
+    std::string getName() const;
+
+    // Setters
     /**
      * @brief Set the name of the matrix.
      * 
@@ -59,12 +66,22 @@ public:
     void setName(const std::string& name);
 
     /**
-     * @brief Get the name of the matrix.
+     * @brief Set the data of the matrix.
      * 
-     * @return The name of the matrix.
+     * @param newData The new data.
+     * @return A reference to the matrix.
      */
-    std::string getName() const;
+    Matrix& setData(const std::vector<std::vector<double>>& newData);
 
+    /**
+     * @brief Set all elements of the matrix to a specific value.
+     * 
+     * @param value The value to set.
+     * @return A reference to the matrix.
+     */
+    Matrix& setData(double value);
+
+    // Utility Methods
     /**
      * @brief Fill the matrix by hand (from console input).
      */
@@ -102,8 +119,17 @@ public:
      */
     static Matrix createIdentityMatrix(size_t size, const std::string& name = "UNNAMED");
 
-    // Matrix operations
+    /**
+     * @brief Check if the matrix is empty.
+     * 
+     * This method checks if the matrix is empty. If `checkForNonZeroData` is true, it also checks if the matrix contains only zeroes.
+     * 
+     * @param checkForNonZeroData If true, check if the matrix contains only zeroes.
+     * @return True if the matrix is empty, false otherwise.
+     */
+    bool isEmpty(bool checkForNonZeroData = false) const;
 
+    // Matrix Operations
     /**
      * @brief Add two matrices.
      * 
@@ -144,41 +170,6 @@ public:
      */
     Matrix transpose() const;
 
-    // Getters
-    size_t getRows() const;
-    size_t getCols() const;
-    const std::vector<std::vector<double>>& getData() const;
-    std::span<const double> getRow(size_t row) const;
-    std::span<const double> getCol(size_t col) const;
-
-    // Setters
-
-    /**
-     * @brief Set the data of the matrix.
-     * 
-     * @param newData The new data.
-     * @return A reference to the matrix.
-     */
-    Matrix& setData(const std::vector<std::vector<double>>& newData);
-
-    /**
-     * @brief Set all elements of the matrix to a specific value.
-     * 
-     * @param value The value to set.
-     * @return A reference to the matrix.
-     */
-    Matrix& setData(double value);
-
-    /**
-     * @brief Check if the matrix is empty.
-     * 
-     * This method checks if the matrix is empty. If `checkForNonZeroData` is true, it also checks if the matrix contains only zeroes.
-     * 
-     * @param checkForNonZeroData If true, check if the matrix contains only zeroes.
-     * @return True if the matrix is empty, false otherwise.
-     */
-    bool isEmpty(bool checkForNonZeroData = false) const;
-
     /**
      * @brief Sum the rows of the matrix.
      * 
@@ -193,32 +184,7 @@ public:
      */
     Matrix sumColumns() const;
 
-    // Friend functions for overloading the << and >> operators
-
-    /**
-     * @brief Output the matrix to a stream.
-     * 
-     * This operator outputs the matrix elements to a stream in a formatted manner.
-     * 
-     * @param os The output stream.
-     * @param matrix The matrix to output.
-     * @return The output stream.
-     */
-    friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
-
-    /**
-     * @brief Input the matrix from a stream.
-     * 
-     * This operator inputs the matrix elements from a stream.
-     * 
-     * @param is The input stream.
-     * @param matrix The matrix to input.
-     * @return The input stream.
-     */
-    friend std::istream& operator>>(std::istream& is, Matrix& matrix);
-
-    // Overloaded operators
-
+    // Overloaded Operators
     /**
      * @brief Add two matrices using the + operator.
      * 
@@ -303,6 +269,29 @@ public:
      * @return True if the matrices are equal within the given tolerance, false otherwise.
      */
     bool isEqual(const Matrix& other, double tolerance = 1e-5) const;
+
+    // Friend functions for overloading the << and >> operators
+    /**
+     * @brief Output the matrix to a stream.
+     * 
+     * This operator outputs the matrix elements to a stream in a formatted manner.
+     * 
+     * @param os The output stream.
+     * @param matrix The matrix to output.
+     * @return The output stream.
+     */
+    friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
+
+    /**
+     * @brief Input the matrix from a stream.
+     * 
+     * This operator inputs the matrix elements from a stream.
+     * 
+     * @param is The input stream.
+     * @param matrix The matrix to input.
+     * @return The input stream.
+     */
+    friend std::istream& operator>>(std::istream& is, Matrix& matrix);
 };
 
 #endif // MATRIX_H

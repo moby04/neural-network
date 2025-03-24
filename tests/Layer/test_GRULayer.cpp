@@ -14,15 +14,7 @@ TEST(GRULayerTest, ForwardPass) {
     EXPECT_FALSE(output.isEmpty());
 }
 
-// **2. Edge Case: Empty Input Should Throw Exception**
-TEST(GRULayerTest, ForwardWithEmptyInput) {
-    GRULayer gru(3, 2);
-    Matrix input(0, 3);  // Empty input
-
-    EXPECT_THROW(gru.forward(input), std::runtime_error);
-}
-
-// **3. Test Backward Pass**
+// **2. Test Backward Pass**
 TEST(GRULayerTest, BackwardPass) {
     GRULayer gru(3, 2);
     Matrix input(1, 3);
@@ -37,6 +29,14 @@ TEST(GRULayerTest, BackwardPass) {
     EXPECT_EQ(gradInput.getRows(), 1);
     EXPECT_EQ(gradInput.getCols(), 3);
     EXPECT_FALSE(gradInput.isEmpty());
+}
+
+// **3. Edge Case: Empty Input Should Throw Exception**
+TEST(GRULayerTest, ForwardWithEmptyInput) {
+    GRULayer gru(3, 2);
+    Matrix input(0, 3);  // Empty input
+
+    EXPECT_THROW(gru.forward(input), std::runtime_error);
 }
 
 // **4. Edge Case: Backward Before Forward Should Throw**

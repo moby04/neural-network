@@ -19,8 +19,10 @@ private:
     Matrix dropoutMask;  // Stores dropped neurons (1 = active, 0 = dropped)
 
 public:
+    // Constructor
     DropoutLayer(size_t inputSize, size_t neurons, std::shared_ptr<ActivationFunction> activationFunc, float dropoutRate);
 
+    // Forward and Backward Propagation
     Matrix forward(const Matrix& input) override;
     Matrix backward(const Matrix& gradient) override;
 };

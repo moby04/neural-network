@@ -1,6 +1,7 @@
 #include "../../include/Layer/GRULayer.h"
 #include <cmath>
 
+// Constructor
 GRULayer::GRULayer(size_t inputSize, size_t hiddenSize)
         : StatefulLayer(inputSize, hiddenSize, nullptr),
         W_z(inputSize, hiddenSize, "W_z"), W_r(inputSize, hiddenSize, "W_r"), W_h(inputSize, hiddenSize, "W_h"),
@@ -13,11 +14,17 @@ GRULayer::GRULayer(size_t inputSize, size_t hiddenSize)
     hiddenState.setData(0.0);
 }
 
+// State Management
 void GRULayer::resetStates() {
     hiddenState.setData(0.0);
     clearInputCache();
 }
 
+void GRULayer::resetHiddenState() {
+    hiddenState.setData(0.0);
+}
+
+// Forward Propagation
 Matrix GRULayer::forward(const Matrix& input) {
     if (input.isEmpty()) {
         throw std::runtime_error("Forward pass: Input matrix is empty.");
@@ -29,7 +36,6 @@ Matrix GRULayer::forward(const Matrix& input) {
     Matrix z_t = sigmoid.apply(input.multiply(W_z, false) + hiddenState.multiply(U_z, false) + b_z);
     Matrix r_t = sigmoid.apply(input.multiply(W_r, false) + hiddenState.multiply(U_r, false) + b_r);
 
-
     Matrix h_tilde = tanh.apply(input.multiply(W_h, false) + (hiddenState * r_t).multiply(U_h, false) + b_h);
 
     Matrix ones(1, hiddenState.getCols(), "Ones");
@@ -39,6 +45,7 @@ Matrix GRULayer::forward(const Matrix& input) {
     return hiddenState;
 }
 
+// Backward Propagation
 Matrix GRULayer::backward(const Matrix& gradOutput) {
     if (inputCache.isEmpty(true)) {
         throw std::runtime_error("Backward pass: forward() must be called before backward().");
@@ -64,10 +71,7 @@ Matrix GRULayer::backward(const Matrix& gradOutput) {
     return dH.multiply(W_z.transpose(), false);
 }
 
-void GRULayer::resetHiddenState() {
-    hiddenState.setData(0.0);
-}
-
+// Getters
 Matrix GRULayer::getHiddenState() const {
     return hiddenState;
 }
