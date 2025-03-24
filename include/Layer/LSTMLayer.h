@@ -31,8 +31,13 @@ public:
     Matrix backward(const Matrix& gradOutput) override;
 
     // Getters
-    Matrix getHiddenState() const;
-    Matrix getCellState() const;
+    inline Matrix getHiddenState() const {
+        return hiddenState;
+    }
+
+    inline Matrix getCellState() const {
+        return cellState;
+    }
 };
 
 #endif // LSTMLAYER_H

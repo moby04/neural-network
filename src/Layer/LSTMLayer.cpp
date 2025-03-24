@@ -93,11 +93,3 @@ Matrix LSTMLayer::backward(const Matrix& gradOutput) {
     return gradOutput.multiply(W_f.transpose(), false);
 }
 
-// Getters
-Matrix LSTMLayer::getHiddenState() const {
-    return hiddenState;
-}
-
-Matrix LSTMLayer::getCellState() const {
-    return cellState;
-}

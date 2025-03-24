@@ -14,12 +14,6 @@ RNNLayer::RNNLayer(size_t inputSize, size_t hiddenSize)
     hiddenState.setData(0.0);
 }
 
-// State Management
-void RNNLayer::resetStates() {
-    hiddenState.setData(0.0);
-    clearInputCache();
-}
-
 // Forward Propagation
 Matrix RNNLayer::forward(const Matrix& input) {
     inputCache = input; 
@@ -41,9 +35,4 @@ Matrix RNNLayer::backward(const Matrix& gradOutput) {
     Matrix dHidden = gradOutput * (ones - squaredHidden);
 
     return dHidden.multiply(W_x.transpose(), false);
-}
-
-// Getters
-Matrix RNNLayer::getHiddenState() const {
-    return hiddenState;
 }

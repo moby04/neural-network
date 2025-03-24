@@ -25,15 +25,23 @@ public:
     GRULayer(size_t inputSize, size_t hiddenSize);
 
     // State Management
-    void resetStates() override;
-    void resetHiddenState();
+    inline void resetStates() override {
+        resetHiddenState();
+        clearInputCache();
+    }
+
+    void resetHiddenState() {
+        hiddenState.setData(0.0);
+    }
 
     // Forward and Backward Propagation
     Matrix forward(const Matrix& input) override;
     Matrix backward(const Matrix& gradOutput) override;
 
     // Getters
-    Matrix getHiddenState() const;
+    inline Matrix getHiddenState() const {
+        return hiddenState;
+    }
 };
 
 #endif // GRU_LAYER_H

@@ -9,11 +9,6 @@ DenseLayer::DenseLayer(size_t inputSize, size_t neurons, std::shared_ptr<Activat
     biases.randomize();
 }
 
-// State Management
-void DenseLayer::resetStates() {
-    clearInputCache(); // Only clears inputCache, no other state variables
-}
-
 // Forward Propagation
 Matrix DenseLayer::forward(const Matrix& input) {
     inputCache = input;

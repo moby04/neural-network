@@ -14,16 +14,6 @@ GRULayer::GRULayer(size_t inputSize, size_t hiddenSize)
     hiddenState.setData(0.0);
 }
 
-// State Management
-void GRULayer::resetStates() {
-    hiddenState.setData(0.0);
-    clearInputCache();
-}
-
-void GRULayer::resetHiddenState() {
-    hiddenState.setData(0.0);
-}
-
 // Forward Propagation
 Matrix GRULayer::forward(const Matrix& input) {
     if (input.isEmpty()) {
@@ -69,9 +59,4 @@ Matrix GRULayer::backward(const Matrix& gradOutput) {
     W_h = W_h - (inputCache.transpose().multiply(dH, false) * 0.01);
 
     return dH.multiply(W_z.transpose(), false);
-}
-
-// Getters
-Matrix GRULayer::getHiddenState() const {
-    return hiddenState;
 }

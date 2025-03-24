@@ -1,27 +1,13 @@
 #include "../include/Matrix.h"
 
-// Constructors and Destructor
+// Constructors
 Matrix::Matrix(size_t rows, size_t cols, const std::string& name)
     : rows(rows), cols(cols), name(name), data(rows, std::vector<double>(cols, 0.0)) {}
 
 Matrix::Matrix(const Matrix& other)
     : name(other.name), rows(other.rows), cols(other.cols), data(other.data) {}
 
-Matrix::~Matrix() {}
-
 // Getters
-size_t Matrix::getRows() const {
-    return rows;
-}
-
-size_t Matrix::getCols() const {
-    return cols;
-}
-
-const std::vector<std::vector<double>>& Matrix::getData() const {
-    return data;
-}
-
 std::span<const double> Matrix::getRow(size_t row) const {
     if (row >= rows) {
         throw std::out_of_range("Row index out of range.");
@@ -40,15 +26,8 @@ std::span<const double> Matrix::getCol(size_t col) const {
     return std::span<const double>(colData);
 }
 
-std::string Matrix::getName() const {
-    return name;
-}
 
 // Setters
-void Matrix::setName(const std::string& name) {
-    this->name = name;
-}
-
 Matrix& Matrix::setData(const std::vector<std::vector<double>>& newData) {
     if (newData.empty()) {
         throw std::invalid_argument("Data cannot be empty.");

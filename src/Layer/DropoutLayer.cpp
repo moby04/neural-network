@@ -27,8 +27,3 @@ Matrix DropoutLayer::forward(const Matrix& input) {
 
     return output;
 }
-
-// Backward Propagation
-Matrix DropoutLayer::backward(const Matrix& gradient) {
-    return gradient * dropoutMask;  // Zero out gradients for dropped neurons
-}

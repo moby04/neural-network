@@ -24,7 +24,9 @@ public:
 
     // Forward and Backward Propagation
     Matrix forward(const Matrix& input) override;
-    Matrix backward(const Matrix& gradient) override;
+    inline Matrix backward(const Matrix& gradient) override {
+        return gradient * dropoutMask;  // Zero out gradients for dropped neurons
+    }
 };
 
 #endif // DROPOUT_LAYER_H

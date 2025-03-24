@@ -28,7 +28,7 @@ private:
 
 public:
     // Constructors and Destructor
-    /**
+     /**
      * @brief Construct a new Matrix object.
      * 
      * @param rows Number of rows.
@@ -47,15 +47,28 @@ public:
     /**
      * @brief Destroy the Matrix object.
      */
-    ~Matrix();
+    ~Matrix() = default;
 
     // Getters
-    size_t getRows() const;
-    size_t getCols() const;
-    const std::vector<std::vector<double>>& getData() const;
+    inline size_t getRows() const {
+        return rows;
+    }
+
+    inline size_t getCols() const {
+        return cols;
+    }
+
+    inline const std::vector<std::vector<double>>& getData() const {
+        return data;
+    }
+
+    inline std::string getName() const {
+        return name;
+    }
+
     std::span<const double> getRow(size_t row) const;
     std::span<const double> getCol(size_t col) const;
-    std::string getName() const;
+    
 
     // Setters
     /**
@@ -63,7 +76,10 @@ public:
      * 
      * @param name The new name.
      */
-    void setName(const std::string& name);
+    inline Matrix& setName(const std::string& name) {
+        this->name = name;
+        return *this;
+    }
 
     /**
      * @brief Set the data of the matrix.
