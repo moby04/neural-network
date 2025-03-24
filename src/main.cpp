@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "../include/Matrix.h"
+#include "../include/matrix/Matrix.h"
 
 int main() {
     std::cout << "Ali is stupid" << std::endl;
