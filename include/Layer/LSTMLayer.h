@@ -3,6 +3,14 @@
 
 #include "StatefulLayer.h"
 
+/**
+ * @brief Long Short-Term Memory (LSTM) Layer.
+ * 
+ * This layer is useful for sequence modeling tasks where long-term dependencies are important.
+ * It maintains both a hidden state and a cell state to capture long-term dependencies.
+ * 
+ * More details: https://en.wikipedia.org/wiki/Long_short-term_memory
+ */
 class LSTMLayer : public StatefulLayer {
 private:
     Matrix W_f, W_i, W_c, W_o; // Weights for forget, input, cell, output gates

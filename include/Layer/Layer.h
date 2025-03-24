@@ -6,6 +6,12 @@
 #include <functional>
 #include <memory>
 
+/**
+ * @brief Abstract base class for all neural network layers.
+ * 
+ * This class defines the basic structure and functionalities of a neural network layer.
+ * Each layer has weights, biases, and an activation function.
+ */
 class Layer {
 protected:
     Matrix weights;
@@ -18,7 +24,24 @@ public:
         : weights(neurons, inputSize), biases(neurons, 1), activation(activationFunc), inputCache(inputSize, 1)  {}
     virtual ~Layer() = default;
 
+    /**
+     * @brief Perform the forward pass through the layer.
+     * 
+     * This method takes an input matrix and returns the output matrix after applying the layer's weights, biases, and activation function.
+     * 
+     * @param input The input matrix.
+     * @return The output matrix.
+     */
     virtual Matrix forward(const Matrix& input) = 0;
+
+    /**
+     * @brief Perform the backward pass through the layer.
+     * 
+     * This method takes the gradient of the loss with respect to the layer's output and returns the gradient of the loss with respect to the layer's input.
+     * 
+     * @param gradient The gradient of the loss with respect to the layer's output.
+     * @return The gradient of the loss with respect to the layer's input.
+     */
     virtual Matrix backward(const Matrix& gradient) = 0; 
 
     // Getters for weights and biases

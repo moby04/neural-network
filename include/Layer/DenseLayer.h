@@ -6,6 +6,14 @@
 #include <memory>
 
 // Dense Layer (Fully Connected Layer)
+/**
+ * @brief Dense (Fully Connected) Layer.
+ * 
+ * This layer is a basic building block of neural networks where each neuron is connected to every neuron in the previous layer.
+ * It is useful for tasks where a fully connected network is needed, such as classification and regression.
+ * 
+ * More details: https://en.wikipedia.org/wiki/Feedforward_neural_network
+ */
 class DenseLayer : public StatefulLayer {
 private:
     Matrix weights, biases;

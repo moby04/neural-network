@@ -5,6 +5,15 @@
 #include "../Matrix.h"
 
 /**
+ * @brief Recurrent Neural Network (RNN) Layer.
+ * 
+ * This layer is useful for sequence modeling tasks such as time series prediction and natural language processing.
+ * It maintains a hidden state that is updated at each time step.
+ * 
+ * More details: https://en.wikipedia.org/wiki/Recurrent_neural_network
+ */
+
+/**
  * A Simple RNN unit operates using the following update rule:
  * ht = tanh(Wx * xt + Wh * h(t-1) + b)
  * 

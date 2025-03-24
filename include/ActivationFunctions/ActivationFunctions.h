@@ -11,7 +11,25 @@
 class ActivationFunction {
     public:
         virtual ~ActivationFunction() = default;
+
+        /**
+         * @brief Apply the activation function to the input.
+         * 
+         * This method is used for the forward propagation step.
+         * 
+         * @param input The input matrix.
+         * @return The transformed matrix after applying the activation function.
+         */
         virtual Matrix apply(const Matrix& input) const = 0;
+
+        /**
+         * @brief Apply the derivative of the activation function to the input.
+         * 
+         * This method is used for the backward propagation step.
+         * 
+         * @param input The input matrix.
+         * @return The matrix after applying the derivative of the activation function.
+         */
         virtual Matrix applyDerivative(const Matrix& input) const = 0;
 };
 

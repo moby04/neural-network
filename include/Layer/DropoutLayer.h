@@ -6,6 +6,11 @@
 
 /**
  * @brief Dropout Layer - Disables neurons during training to prevent overfitting.
+ * 
+ * This layer randomly disables neurons during training to prevent overfitting.
+ * It is useful for regularizing neural networks and improving generalization.
+ * 
+ * More details: https://en.wikipedia.org/wiki/Dropout_(neural_networks)
  */
 class DropoutLayer : public Layer {
 private:

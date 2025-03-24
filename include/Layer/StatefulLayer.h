@@ -4,6 +4,12 @@
 #include "Layer.h"
 #include "../Matrix.h"
 
+/**
+ * @brief Abstract base class for stateful layers.
+ * 
+ * Stateful layers maintain an internal state that is updated during forward passes and used during backward passes.
+ * Examples include RNN, LSTM, and GRU layers.
+ */
 class StatefulLayer : public Layer {
 protected:
     Matrix inputCache;
