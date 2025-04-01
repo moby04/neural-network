@@ -9,10 +9,6 @@ const Matrix& Layer::getBiases() const {
     return biases;
 }
 
-const Matrix& Layer::getInputCache() const {
-    return inputCache;
-}
-
 // Setters
 Layer& Layer::setWeights(const Matrix& w) {
     if (w.getRows() != weights.getRows() || w.getCols() != weights.getCols()) {

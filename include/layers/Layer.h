@@ -49,7 +49,6 @@ public:
     // Getters for weights and biases
     const Matrix& getWeights() const;
     const Matrix& getBiases() const;
-    const Matrix& getInputCache() const;
 
     // Setters for weights and biases
     Layer& setWeights(const Matrix& w);
